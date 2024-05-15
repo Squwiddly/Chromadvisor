@@ -1,0 +1,10 @@
+# Changes here will be overwritten by Copier; NEVER EDIT MANUALLY
+_commit: 66fd52c
+_src_path: gh:schwallergroup/copier-liac-minimal
+author_email: vera.diasgomes@epfl.ch
+author_name: Vera Dias Gomes
+github_org: Squwiddly
+package_name: chromadvisor_pack
+project_name: Chromadvisor
+short_description: Recommend the eluant for a chromatography based on the desired
+    molecule
