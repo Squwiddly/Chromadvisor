@@ -1,3 +1,16 @@
+#for the .py file, py3Dmol does not work, I will then put it in commentary
+import pubchempy as pcp
+
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from rdkit.Chem import Draw
+from rdkit.Chem import FunctionalGroups
+from rdkit.Chem import Crippen
+#import ctypes
+#import py3Dmol
+from IPython.display import display, Image
+
+
 #First the convertion to the english name of  molecule into its SMILES
 def get_smiles(molecule_name):
     try: # Attempt to get compounds from PubChem by name
