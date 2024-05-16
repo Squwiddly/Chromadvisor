@@ -1,0 +1,19 @@
+from polaritéetlogP import recommend_solvent
+
+#test on chlorphenamine (apolar)
+def test_recommend_solvent_apolaire():
+    molecule_smiles = "c1([C@@H](c2ccccn2)CCN(C)C)ccc(Cl)cc1"
+    result = recommend_solvent(molecule_smiles)
+    assert result == "Use an apolar eluent such as : hexane or toluene with a bit of EtOH/acetone."
+
+#test on ortho-Cresol 
+def test_recommend_solvent_apolar_polar():
+    molecule_smiles = "Cc1ccccc1O"
+    result = recommend_solvent(molecule_smiles)
+    assert result == "Use a mix of DCM/MeOH or a mix of ethyl acetate/hexane."
+
+#test on glucose (polar)
+def test_recommend_solvent_polar():
+    molecule_smiles = "OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H](O)[C@@H](O)1"
+    result = recommend_solvent(molecule_smiles)
+    assert result == "Use a polar eluent such as : MeOH or acetone, even water."
