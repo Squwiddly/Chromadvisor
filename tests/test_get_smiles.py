@@ -1,3 +1,4 @@
+#To run the test, put in the terminal : pytest -s <path/to/Chromadvisor/test_name_files.py
 from Chromadvisor_without_interface import get_smiles
 
 # Test the function
