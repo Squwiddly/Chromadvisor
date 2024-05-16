@@ -10,4 +10,8 @@ from rdkit.Chem import FunctionalGroups
 from rdkit.Chem import Crippen
 from PIL import ImageTk
 
+#Warning, py3Dmol does only work on .ipynb files
 import py3Dmol
+
+#For the code without the interface 
+from IPython.display import display, Image
