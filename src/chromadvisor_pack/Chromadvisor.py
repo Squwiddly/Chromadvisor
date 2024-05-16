@@ -1,4 +1,17 @@
 """Recommend the eluant for a chromatography based on the desired molecule."""
+import pubchempy as pcp
+
+import tkinter as tk
+from tkinter import ttk
+from tkinter import messagebox
+from rdkit import Chem
+from rdkit.Chem import AllChem
+from rdkit.Chem import Draw
+from rdkit.Chem import FunctionalGroups
+from rdkit.Chem import Crippen
+from PIL import ImageTk
+#Warning, does not work for.py files
+import py3Dmol
 
 #First the convertion to the english name of  molecule into its SMILES
 
