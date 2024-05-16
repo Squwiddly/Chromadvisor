@@ -15,3 +15,6 @@ import py3Dmol
 
 #For the code without the interface 
 from IPython.display import display, Image
+
+#Versions of the different packages ??
+
