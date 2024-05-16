@@ -254,11 +254,11 @@ def calculate_logp_and_recommend_solvent(smiles):
     logp = Crippen.MolLogP(molecule)
     recommendation = ""
     if logp > 3:
-        recommendation = "Use hexane/toluene with a bit of EtOH/acetone."
+        recommendation = "Use an apolar eluent such as : hexane or toluene with a bit of EtOH/acetone."
     elif 0 <= logp <= 3:
-        recommendation = "Use a mix of DCM/MeOH or ethyl acetate/hexane."
+        recommendation = "Use a mix of DCM/MeOH or a mix of ethyl acetate/hexane."
     else:  # logP < 0
-        recommendation = "Use MeOH or acetone, sometimes water."
+        recommendation = "Use a polar eluent such as : MeOH or acetone, even water."
     return logp, recommendation
 
 
@@ -314,7 +314,7 @@ def on_submit(event=None):
                 positions = data['positions']
 
                 if count != 0:
-                    functional_groups_str2 = "\n".join([f"Founctional group {name} found {count} times in the molecule."]) #at the positions : {positions}"]) #for name, data in functional_groups.items()])
+                    functional_groups_str2 = "\n".join([f"Functional group {name} found {count} times in the molecule."]) #at the positions : {positions}"]) #for name, data in functional_groups.items()])
                     functional_groups_str = '\n'.join([functional_groups_str, functional_groups_str2])
                     # Delete the lines at the beggining and at the enf of the chain
                     functional_groups_str = functional_groups_str.strip()
