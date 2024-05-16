@@ -1,4 +1,4 @@
-from polaritéetlogP import recommend_solvent
+from Chromadvisor import calculate_logp_and_recommend_solvent
 
 #test on chlorphenamine (apolar)
 def test_recommend_solvent_apolaire():
