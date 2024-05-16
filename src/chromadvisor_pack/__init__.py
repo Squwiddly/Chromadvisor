@@ -1,20 +1,5 @@
-import pubchempy as pcp
+"""Just a short project test."""
 
-import tkinter as tk
-from tkinter import ttk
-from tkinter import messagebox
-from rdkit import Chem
-from rdkit.Chem import AllChem
-from rdkit.Chem import Draw
-from rdkit.Chem import FunctionalGroups
-from rdkit.Chem import Crippen
-from PIL import ImageTk
+from __future__ import annotations
 
-#Warning, py3Dmol does only work on .ipynb files
-import py3Dmol
-
-#For the code without the interface 
-from IPython.display import display, Image
-
-#Versions of the different packages ??
-
+__version__ = "0.0.1"
