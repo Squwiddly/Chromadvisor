@@ -6,13 +6,14 @@ def get_smiles(molecule_name):
             smiles = results[0].canonical_smiles
             return smiles
         else:
-            return "Molecule not found. Please try another name."
+            return None #"Molecule not found. Please try another name."
     except Exception as e:
-        return "An error occurred: {}".format(str(e)) # Print an error message if an exception occurs
+        return None #"An error occurred: {}".format(str(e)) # Print an error message if an exception occurs
 
 
 #Then find the functional groups of a molecule and show it on 2D
-# Liste de sous-structures SMARTS représentant les groupes fonctionnels des molecules
+
+# List of the sub-structure SMARTS representing the functional groups of molecules
 functional_group_smarts = {
     "anhydride": "[CX3](=[OX1])[OX2][CX3](=[OX1])",
     "carboxylic acid": "[CX3](=O)[OX2H1]",
@@ -54,7 +55,7 @@ functional_group_smarts = {
     "hydroxyl": "[O]", #/!\ attention juste un O !!
 }
 
-# Fonction pour trouver les groupes fonctionnels d'une molécule
+# Function to find the functional groups of a molecule
 def find_functional_groups(smiles):
 
     functional_groups = {}
@@ -233,7 +234,7 @@ def calculate_logp_and_recommend_solvent(smiles):
     molecule = Chem.MolFromSmiles(smiles)
     if molecule is None:
         return None, "Invalid SMILES"
-    logp = Crippen.MolLogP(molecule)
+    logp = Crippen.MolLogP(molecule) # Calculate the log(P) using a RDKit module
     recommendation = ""
     if logp > 3:
         recommendation = "Use an apolar eluent such as : hexane or toluene with a bit of EtOH/acetone."
@@ -244,8 +245,8 @@ def calculate_logp_and_recommend_solvent(smiles):
     return logp, recommendation
 
 
-#Dessin de molecule 2D + 3D
-def display_molecule_2d(smiles): # Fonction pour afficher une représentation 2D de la molécule
+#Draw of molecule 2D + 3D
+def display_molecule_2d(smiles): # Function to display a representation 2D  of the molecule
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         print("Error", "Impossible to convert the SMILES into a molecule.")
@@ -255,34 +256,34 @@ def display_molecule_2d(smiles): # Fonction pour afficher une représentation 2D
 
 
 def generate_3d_structure(smiles):
-    # Convertir le SMILES en objet moléculaire RDKit
+    # Convert the SMILES in an molecular RDKit
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         print("Error : Impossible to convert the SMILES into a molecule.")
         return None
-    # Générer une conformation 3D
+    # Generate a 3D conformation
     mol = Chem.AddHs(mol)
     AllChem.EmbedMolecule(mol, randomSeed=42)
     AllChem.UFFOptimizeMolecule(mol)
     # Convertir la molécule en format PDB
     pdb = Chem.MolToPDBBlock(mol)
-    # Visualiser la molécule en 3D
+    # Visualise the molecule in 3D
     viewer = py3Dmol.view(width=400, height=400)
     viewer.addModel(pdb, 'pdb')
     viewer.setStyle({'stick': {}})
     viewer.zoomTo()
-    # Afficher le visualiseur dans le notebook
+    # Display the visualisator in the notebook
     return viewer.show()
 
 
 def on_submit(event=None):
-    molecule_name = entry.get() # Retrieve the mlecule in english from the entry field
-    smiles = get_smiles(molecule_name) # Obtenir la représentation SMILES de la molécule
-    if smiles:  # Si la représentation SMILES est obtenue avec succès
-        functional_groups = find_functional_groups(smiles)  # Trouver les groupes fonctionnels dans la molécule
-        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)  # Calculer le logP et recommander le solvant
+    molecule_name = entry.get() # Retrieve the molecule in english from the entry field
+    smiles = get_smiles(molecule_name) # Obtain the representation SMILES of the molecule
+    if smiles:  # If the SMILES was obtained with success
+        functional_groups = find_functional_groups(smiles)  # Find the functional groups of the molecule
+        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)  # Calculate the logP and propose an eluent
 
-        if functional_groups:  # Si des groupes fonctionnels sont trouvés, ils sont affichés
+        if functional_groups:  # If the functional groups are found, they will be displayed
             functional_groups_str = ''
             for name, data in functional_groups.items():
                 count = len(data["positions"])
@@ -295,7 +296,7 @@ def on_submit(event=None):
                 if count != 0:
                     functional_groups_str2 = "\n".join([f"Functional group {name} found {count} times in the molecule."]) #at the positions : {positions}"]) #for name, data in functional_groups.items()])
                     functional_groups_str = '\n'.join([functional_groups_str, functional_groups_str2])
-                    # Supprimer les lignes vides au début et à la fin de la chaîne
+                    # Delete the hollow lines at the beggining and end of the chain
                     functional_groups_str = functional_groups_str.strip()
 
         else:
@@ -315,14 +316,14 @@ if functional_groups:
             count = len(data["positions"])
             print(f"Functional group {name} found {count} times in the molecule.")
 
-        # Calculate logP and recommend solvent
+        # Calculate logP and recommend eluent
         logp, recommendation = calculate_logp_and_recommend_solvent(smiles)
         print(f"Log(P): {logp}")
         print("Recommendation:", recommendation)
 else:
         print("No functional groups found in the molecule.")
 
-# Afficher l'image en 2D de la molécule dans l'interface et 3D dans le notebook
+# Display the molecule in 2D and in 3D in the notebook
 display_molecule_2d(smiles)
 generate_3d_structure(smiles)
 
