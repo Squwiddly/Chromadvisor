@@ -55,24 +55,30 @@ def test_find_functional_groups_invalid_smiles():
 
 ########################################################################################################
 #test the log and recommendation function
-from Chromadvisor import calculate_logp_and_recommend_solvent
+from Code_without_interface import calculate_logp_and_recommend_solvent
 
 #test on chlorphenamine (apolar)
 def test_recommend_solvent_apolaire():
     molecule_smiles = "c1([C@@H](c2ccccn2)CCN(C)C)ccc(Cl)cc1"
     result = calculate_logp_and_recommend_solvent(molecule_smiles)
-    assert result == "Use an apolar eluent such as : hexane or toluene with a bit of EtOH/acetone."
+    assert result == (3.8186000000000027, "Use an apolar eluent such as : hexane or toluene with a bit of EtOH/acetone.")
 
 #test on ortho-Cresol
 def test_recommend_solvent_apolar_polar():
     molecule_smiles = "Cc1ccccc1O"
     result = calculate_logp_and_recommend_solvent(molecule_smiles)
-    assert result == "Use a mix of DCM/MeOH or a mix of ethyl acetate/hexane."
+    assert result == (1.70062, "Use a mix of DCM/MeOH or a mix of ethyl acetate/hexane.")
 
 #test on glucose (polar)
 def test_recommend_solvent_polar():
     molecule_smiles = "OC[C@@H](O1)[C@@H](O)[C@H](O)[C@@H](O)[C@@H](O)1"
     result = calculate_logp_and_recommend_solvent(molecule_smiles)
-    assert result == "Use a polar eluent such as : MeOH or acetone, even water."
+    assert result == (-3.2214000000000005, 'Use a polar eluent such as : MeOH or acetone, even water.')
+
+def test_recommend_solvant_invalid():
+    molecule_smiles = "InvalidSMILES"
+    result = calculate_logp_and_recommend_solvent(molecule_smiles)
+    assert result == (None, "Invalid SMILES")
+
 
 
