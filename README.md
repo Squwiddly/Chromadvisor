@@ -1,4 +1,6 @@
+div style="text-align:center;">
 ![Project Logo](assets/banner.png)
+</div>
 
 ![Coverage Status](assets/coverage-badge.svg)
 
