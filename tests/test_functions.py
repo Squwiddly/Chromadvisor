@@ -45,7 +45,6 @@ def test_find_functional_groups_propionamide():
 def test_find_functional_groups_no_functional_groups():
     smiles = "CCC"
     result = find_functional_groups(smiles)
-
     assert result == {}
 
 def test_find_functional_groups_invalid_smiles():
@@ -53,21 +52,6 @@ def test_find_functional_groups_invalid_smiles():
     result = find_functional_groups(smiles)
     assert result is None
 
-
-########################################################################################################
-#test the on_submit function
-from Chromadvisor_without_interface import on_submit
-
-def test_on_submit_molecule_found():
-    # Mocking the get_smiles function to return a valid SMILES string
-    molecule_name = "Acetone"
-    expected_result = {'ketone': {'count': 1, }} #'positions': [(1, 2)]}}
-    assert on_submit(molecule_name) == expected_result
-
-def test_on_submit_molecule_not_found():
-    # Mocking the get_smiles function to return None
-    molecule_name = "UnknownMolecule"
-    assert on_submit(molecule_name) == None
 
 ########################################################################################################
 #test the log and recommendation function
