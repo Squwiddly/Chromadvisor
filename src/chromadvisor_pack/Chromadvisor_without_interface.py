@@ -267,7 +267,7 @@ def display_molecule_2d(smiles): # Function to display a representation 2D  of t
     img = Draw.MolToImage(mol)
     display(img)
 
-
+#If the programm is run on a file.ipynb, this function would work. On our, side it did not work in a file.py
 def generate_3d_structure(smiles):
     # Convert the SMILES in an molecular RDKit
     mol = Chem.MolFromSmiles(smiles)
@@ -289,59 +289,31 @@ def generate_3d_structure(smiles):
     return viewer.show()
 
 
-def on_submit(event=None):
-    molecule_name = entry.get() # Retrieve the molecule in english from the entry field
-    smiles = get_smiles(molecule_name) # Obtain the representation SMILES of the molecule
-    if smiles:  # If the SMILES was obtained with success
-        functional_groups = find_functional_groups(smiles)  # Find the functional groups of the molecule
-        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)  # Calculate the logP and propose an eluent
-
-        if functional_groups:  # If the functional groups are found, they will be displayed
+#Using it
+molecule_name = input("Enter the name of your desired molecule (in English) :")# Retrieve the molecule in english from the entry field
+smiles = get_smiles(molecule_name)
+print(smiles)
+if smiles:  # Si la représentation SMILES est obtenue avec succès
+        functional_groups = find_functional_groups(smiles)  # Trouver les groupes fonctionnels dans la molécule
+        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)  # Calculer le logP et recommander le solvant
+   
+        if functional_groups:# Si des groupes fonctionnels sont trouvés, ils sont affichés
             functional_groups_str = ''
             for name, data in functional_groups.items():
                 count = len(data["positions"])
-
                 if name in ['ketone', 'phenol']:
                     count = int(count/2)
-
                 positions = data['positions']
-
                 if count != 0:
-                    functional_groups_str2 = "\n".join([f"Functional group {name} found {count} times in the molecule."]) #at the positions : {positions}"]) #for name, data in functional_groups.items()])
-                    functional_groups_str = '\n'.join([functional_groups_str, functional_groups_str2])
-                    # Delete the hollow lines at the beggining and end of the chain
-                    functional_groups_str = functional_groups_str.strip()
-
-        else:
-            print("No functional groups found in the molecule.")
-    else:
-        print("Error", "Molecule not found. Please try another name.")
-
-
-#Using it
-molecule_name = input("Enter the name of your desired molecule (in English) :")
-smiles = get_smiles(molecule_name)
-print(smiles)
-functional_groups = find_functional_groups(smiles)
-if functional_groups:
-        print("Functional groups of the molecule:")
-        for name, data in functional_groups.items():
-            count = len(data["positions"])
-
-            if name in ['ketone', 'phenol']:
-                    count = int(count/2)
-                    
-            if count != 0:
                     print(f"Functional group {name} found {count} times in the molecule.")
+        else :
+            print("No functional groups found in the molecule.")
 
-        # Calculate logP and recommend solvent
-        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)
         print(f"Log(P): {logp}")
         print("Recommendation:", recommendation)
+        # Afficher l'image en 2D de la molécule dans l'interface et 3D dans le notebook
+        display_molecule_2d(smiles)
+        generate_3d_structure(smiles) #erase if it does not work on a file.py
 else:
-        print("No functional groups found in the molecule.")
-
-# Display the 2D image of the molecule
-display_molecule_2d(smiles)
-#generate_3d_structure(smiles)
+        print("Error", "Molecule not found. Please try another name.")
 
