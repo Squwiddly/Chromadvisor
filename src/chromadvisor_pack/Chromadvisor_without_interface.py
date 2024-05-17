@@ -318,7 +318,7 @@ def on_submit(event=None):
         print("Error", "Molecule not found. Please try another name.")
 
 
-# Using it
+#Using it
 molecule_name = input("Enter the name of your desired molecule (in English) :")
 smiles = get_smiles(molecule_name)
 print(smiles)
@@ -327,16 +327,21 @@ if functional_groups:
         print("Functional groups of the molecule:")
         for name, data in functional_groups.items():
             count = len(data["positions"])
-            print(f"Functional group {name} found {count} times in the molecule.")
 
-        # Calculate logP and recommend eluent
+            if name in ['ketone', 'phenol']:
+                    count = int(count/2)
+                    
+            if count != 0:
+                    print(f"Functional group {name} found {count} times in the molecule.")
+
+        # Calculate logP and recommend solvent
         logp, recommendation = calculate_logp_and_recommend_solvent(smiles)
         print(f"Log(P): {logp}")
         print("Recommendation:", recommendation)
 else:
         print("No functional groups found in the molecule.")
 
-# Display the molecule in 2D and in 3D in the notebook
+# Display the 2D image of the molecule
 display_molecule_2d(smiles)
-generate_3d_structure(smiles)
+#generate_3d_structure(smiles)
 
