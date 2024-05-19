@@ -1,7 +1,7 @@
 import pytest
 
 #test the get_smiles function
-from src.chromadvisor_pack import get_smiles
+from chromadvisor_pack import get_smiles
 
 def test_get_smiles_found():
     molecule_name = "water"
