@@ -8,7 +8,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
 description = "Recommend the eluant for a chromatography based on the desired molecule"
-dependencies = ["pubchempy", "rdkit", "rdkit.Chem", "PIL", "tkinker", "py3Dmol", "IPython.display"
+dependencies = ["pubchempy", "rdkit", "rdkit.Chem", "PIL", "tkinter", "py3Dmol", "IPython.display"
     # "rdkit",
 ]
 authors = [
