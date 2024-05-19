@@ -53,6 +53,9 @@ path = "src/chromadvisor_pack/__init__.py"
 [tool.hatch.build.targets.wheel]
 packages = ["src/chromadvisor_pack"]
 
+[tool.hatch.envs.default]
+dependencies = ["pytest"]
+
 [tool.pytest.ini_options]
 testpaths = [
     "tests",
