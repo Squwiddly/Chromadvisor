@@ -4,6 +4,7 @@ from .functions import (
     find_functional_groups,
     calculate_logp_and_recommend_solvent,
     display_molecule_2d,
+    on_submit,
     generate_3d_structure
 )
 __version__ = "0.0.1"
