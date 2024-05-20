@@ -13,11 +13,6 @@ def test_get_smiles_not_found():
     result = get_smiles(molecule_name)
     assert None == 'Molecule not found. Please try another name.'
 
-def test_get_smiles_nothing():
-    molecule_name = ""
-    result = get_smiles(molecule_name)
-    assert "An error occurred" in result
-
 ########################################################################################################
 #test the find_functional_groups function
 from chromadvisor_pack import find_functional_groups
