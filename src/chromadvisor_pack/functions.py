@@ -24,7 +24,7 @@ def get_smiles(molecule_name):
         else:
             return None #"Molecule not found. Please try another name."
     except Exception as e:
-        return None #"An error occurred: {}".format(str(e)) # Print an error message if an exception occurs
+        return None 
 
 
 #Then find the functional groups of a molecule and show it on 2D
