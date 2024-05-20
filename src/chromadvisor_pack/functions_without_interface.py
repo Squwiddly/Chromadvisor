@@ -7,7 +7,7 @@ from rdkit.Chem import Draw
 from rdkit.Chem import FunctionalGroups
 from rdkit.Chem import Crippen
 #import ctypes
-#import py3Dmol
+import py3Dmol
 from IPython.display import display, Image
 
 
