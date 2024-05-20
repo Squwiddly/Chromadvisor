@@ -19,7 +19,6 @@ Recommend the eluant for a chromatography based on the desired molecule
 ```python
 from chromadvisor.functions import find_functional_groups
 
-# One line to rule them all
 result = find_functional_groups(data)
 ```
 
