@@ -1,5 +1,5 @@
 """Recommending an eluant mixture based of the log(P) of the desired molecule"""
-from .functions_without_interface, .functions import (
+from .functions import (
     get_smiles,
     find_functional_groups,
     calculate_logp_and_recommend_solvent,
