@@ -12,7 +12,7 @@ from IPython.display import display, Image
 
 
 #First the convertion to the english name of  molecule into its SMILES
-def get_smiles(molecule_name):
+def get_smiles_wo_interface(molecule_name):
     try: # Attempt to get compounds from PubChem by name
         results = pcp.get_compounds(molecule_name, 'name')
         if results: # Extract the canonical SMILES representation from the first result
@@ -69,7 +69,7 @@ functional_group_smarts = {
 }
 
 # Function to find the functional groups of a molecule
-def find_functional_groups(smiles):
+def find_functional_groups_wo_interface(smiles):
 
     functional_groups = {}
     functional_groups2 = {}
@@ -243,7 +243,7 @@ def find_functional_groups(smiles):
     return functional_groups2
 
 #Polarity and log(P)
-def calculate_logp_and_recommend_solvent(smiles):
+def calculate_logp_and_recommend_solvent_wo_interface(smiles):
     molecule = Chem.MolFromSmiles(smiles)
     if molecule is None:
         return None, "Invalid SMILES"
@@ -259,7 +259,7 @@ def calculate_logp_and_recommend_solvent(smiles):
 
 
 #Draw of molecule 2D + 3D
-def display_molecule_2d(smiles): # Function to display a representation 2D  of the molecule
+def display_molecule_2d_wo_interface(smiles): # Function to display a representation 2D  of the molecule
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         print("Error", "Impossible to convert the SMILES into a molecule.")
@@ -268,7 +268,7 @@ def display_molecule_2d(smiles): # Function to display a representation 2D  of t
     display(img)
 
 #If the programm is run on a file.ipynb, this function would work. On our, side it did not work in a file.py
-def generate_3d_structure(smiles):
+def generate_3d_structure_wo_interface(smiles):
     # Convert the SMILES in an molecular RDKit
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -291,11 +291,11 @@ def generate_3d_structure(smiles):
 
 #Using it
 molecule_name = input("Enter the name of your desired molecule (in English) :")# Retrieve the molecule in english from the entry field
-smiles = get_smiles(molecule_name)
+smiles = get_smiles_wo_interface(molecule_name)
 print(smiles)
 if smiles:  # Si la représentation SMILES est obtenue avec succès
-        functional_groups = find_functional_groups(smiles)  # Trouver les groupes fonctionnels dans la molécule
-        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)  # Calculer le logP et recommander le solvant
+        functional_groups = find_functional_groups_wo_interface(smiles)  # Trouver les groupes fonctionnels dans la molécule
+        logp, recommendation = calculate_logp_and_recommend_solvent_wo_interface(smiles)  # Calculer le logP et recommander le solvant
    
         if functional_groups:# Si des groupes fonctionnels sont trouvés, ils sont affichés
             functional_groups_str = ''
@@ -312,8 +312,8 @@ if smiles:  # Si la représentation SMILES est obtenue avec succès
         print(f"Log(P): {logp}")
         print("Recommendation:", recommendation)
         # Afficher l'image en 2D de la molécule dans l'interface et 3D dans le notebook
-        display_molecule_2d(smiles)
-        generate_3d_structure(smiles) #erase if it does not work on a file.py
+        display_molecule_2d_wo_interface(smiles)
+        generate_3d_structure_wo_interface(smiles) #erase if it does not work on a file.py
 else:
         print("Error", "Molecule not found. Please try another name.")
 
