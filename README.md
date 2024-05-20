@@ -17,10 +17,10 @@ Recommend the eluant for a chromatography based on the desired molecule
 ## 🔥 Usage
 
 ```python
-from mypackage import main_func
+from chromadvisor.functions import find_functional_groups
 
 # One line to rule them all
-result = main_func(data)
+result = find_functional_groups(data)
 ```
 
 This usage example shows how to quickly leverage the package's main functionality with just one line of code (or a few lines of code). 
