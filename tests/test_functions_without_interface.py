@@ -11,7 +11,7 @@ def test_get_smiles_found():
 def test_get_smiles_not_found():
     molecule_name = "nonexistent_molecule"
     result = get_smiles(molecule_name)
-    assert None == 'Molecule not found. Please try another name.'
+    assert result is None
 
 ########################################################################################################
 #test the find_functional_groups function
