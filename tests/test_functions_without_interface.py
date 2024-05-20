@@ -1,7 +1,7 @@
 import pytest
 
 #test the get_smiles function
-from src.chromadvisor_pack import get_smiles
+from chromadvisor_pack import get_smiles
 
 def test_get_smiles_found():
     molecule_name = "water"
@@ -20,7 +20,7 @@ def test_get_smiles_nothing():
 
 ########################################################################################################
 #test the function display_molecule_2d
-from src.chromadvisor_pack import display_molecule_2d
+from chromadvisor_pack import display_molecule_2d
 
 def test_display_molecule_2d_found():
     name_molecule = "123"
@@ -29,7 +29,7 @@ def test_display_molecule_2d_found():
 
 ########################################################################################################
 #test the find_functional_groups function
-from src.chromadvisor_pack import find_functional_groups
+from chromadvisor_pack import find_functional_groups
 
 def test_find_functional_groups_salicylic_acid():
     smiles = "C1=CC=C(C(=C1)C(=O)O)O"
@@ -55,7 +55,7 @@ def test_find_functional_groups_invalid_smiles():
 
 ########################################################################################################
 #test the log and recommendation function
-from src.chromadvisor_pack import calculate_logp_and_recommend_solvent
+from chromadvisor_pack import calculate_logp_and_recommend_solvent
 
 #test on chlorphenamine (apolar)
 def test_recommend_solvent_apolaire():
