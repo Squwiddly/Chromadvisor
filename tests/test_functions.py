@@ -73,31 +73,42 @@ def create_test_image():
 def test_display_molecule_2d_success(mocker):
     smiles = 'CCO'
     parent_window = Tk()
+
     # Mocking Chem.MolFromSmiles
     mock_mol = MagicMock()
     mocker.patch('rdkit.Chem.MolFromSmiles', return_value=mock_mol)
+
     # Mocking Draw.MolToImage to return an image
     mock_image = create_test_image()
     mocker.patch('rdkit.Chem.Draw.MolToImage', return_value=mock_image)
+
     # Mocking ImageTk.PhotoImage to use the real image
     mocker.patch('PIL.ImageTk.PhotoImage', return_value=mock_image)
+
     display_molecule_2d(smiles, parent_window)
+
     Chem.MolFromSmiles.assert_called_once_with(smiles)
     Draw.MolToImage.assert_called_once_with(mock_mol)
     ImageTk.PhotoImage.assert_called_once_with(mock_image)
+    
     # Cleanup
     parent_window.destroy()
 
 def test_display_molecule_2d_invalid_smiles(mocker):
     smiles = 'invalid_smiles'
     parent_window = Tk()
+
     # Mocking Chem.MolFromSmiles to return None
     mocker.patch('rdkit.Chem.MolFromSmiles', return_value=None)
+
     # Mocking messagebox.showerror
     mock_showerror = mocker.patch('tkinter.messagebox.showerror')
+
     display_molecule_2d(smiles, parent_window)
+
     Chem.MolFromSmiles.assert_called_once_with(smiles)
     mock_showerror.assert_called_once_with("Error", "Impossible to convert the SMILES into a molecule.")
+
     # Cleanup
     parent_window.destroy()
 
