@@ -44,6 +44,31 @@ def test_find_functional_groups_invalid_smiles():
     result = find_functional_groups(smiles)
     assert result is None
 
+########################################################################################################
+#test the display_molecul_2d function
+def parent_window():
+    # Create a parent window for testing
+    parent = Tk()
+    yield parent
+    parent.destroy()
+
+def test_display_molecule_2d_valid_smiles(parent_window, mocker):
+    smiles = "CCO"
+    with mocker.patch('tkinter.messagebox.showerror') as mock_showerror:
+        display_molecule_2d(smiles, parent_window)
+        assert mock_showerror.call_count == 0  # Ensure messagebox.showerror is not called
+        # Ensure that the molecule image label is created and packed
+        assert len(parent_window.winfo_children()) == 1  # Assuming no other widgets are present
+
+def test_display_molecule_2d_invalid_smiles(parent_window, mocker):
+    smiles = "invalid_smiles"
+    with mocker.patch('tkinter.messagebox.showerror') as mock_showerror:
+        display_molecule_2d(smiles, parent_window)
+        # Ensure that messagebox.showerror is called with the appropriate error message
+        mock_showerror.assert_called_once_with("Error", "Impossible to convert the SMILES into a molecule.")
+        # Ensure that no molecule image label is created
+        assert len(parent_window.winfo_children()) == 0
+
 
 ########################################################################################################
 #test the log and recommendation function
