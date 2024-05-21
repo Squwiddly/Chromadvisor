@@ -13,9 +13,17 @@ from PIL import ImageTk
 #Warning, does not work for.py files
 import py3Dmol
 
-#First the convertion to the english name of  molecule into its SMILES
-
+# Function to retrieve the SMILES representation of a molecule given its name
 def get_smiles(molecule_name):
+    """
+    Retrieve the SMILES representation of a molecule from its name.
+
+    Args:
+    molecule_name (str): The name of the molecule in English.
+
+    Returns:
+    str: The SMILES representation of the molecule, or None if the molecule is not found.
+    """
     try: # Attempt to get compounds from PubChem by name
         results = pcp.get_compounds(molecule_name, 'name')
         if results: # Extract the canonical SMILES representation from the first result
@@ -72,8 +80,17 @@ functional_group_smarts = {
     "hydroxyl": "[O]", #/!\ attention juste un O !!
 }
 
-# Function to finc the functional groups of a given molecule
+# Function to find the functional groups of a molecule
 def find_functional_groups(smiles):
+    """
+    Find the functional groups of a molecule given its SMILES representation.
+
+    Args:
+    smiles (str): The SMILES representation of the molecule.
+
+    Returns:
+    dict: A dictionary containing information about the detected functional groups.
+    """
     functional_groups = {}
     functional_groups2 = {}
   
@@ -245,8 +262,17 @@ def find_functional_groups(smiles):
 
     return functional_groups2
 
-#Polarity and log(P) calculations
+# Function to calculate logP and recommend solvent
 def calculate_logp_and_recommend_solvent(smiles):
+    """
+    Calculate the logP value of a molecule and recommend a solvent for chromatography.
+
+    Args:
+    smiles (str): The SMILES representation of the molecule.
+
+    Returns:
+    tuple: A tuple containing the logP value and the recommended solvent.
+    """
     molecule = Chem.MolFromSmiles(smiles)
     if molecule is None:
         return None, "Invalid SMILES"
@@ -261,8 +287,15 @@ def calculate_logp_and_recommend_solvent(smiles):
     return logp, recommendation
 
 
-#Drawing of the molecule in 2D + 3D
-def display_molecule_2d(smiles, parent_window): # Function to display the representation 2D of a molecule
+# Function to display the 2D representation of a molecule
+def display_molecule_2d(smiles, parent_window):
+    """
+    Display the 2D representation of a molecule in a Tkinter window.
+
+    Args:
+    smiles (str): The SMILES representation of the molecule.
+    parent_window: The parent Tkinter window to display the molecule in.
+    """
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         messagebox.showerror("Error", "Impossible to convert the SMILES into a molecule.")
@@ -274,7 +307,14 @@ def display_molecule_2d(smiles, parent_window): # Function to display the repres
     molecule_image_label.image = img_tk
     molecule_image_label.pack()
 
+# Function to generate the 3D structure of a molecule
 def generate_3d_structure(smiles):
+    """
+    Generate the 3D structure of a molecule and display it in a 3D viewer.
+
+    Args:
+    smiles (str): The SMILES representation of the molecule.
+    """
     # Convert the SMILES into an RDKIT molecular object
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -295,7 +335,17 @@ def generate_3d_structure(smiles):
     return viewer.show()
 
 
+# Callback function for the submit button
 def on_submit(event=None):
+    """
+    Callback function for the submit button.
+
+    Retrieves the molecule name from the entry field,
+    obtains the SMILES representation of the molecule,
+    finds its functional groups, calculates logP, and
+    recommends a solvent for chromatography. Displays
+    the results in a Tkinter window.
+    """
     molecule_name = entry.get() # Retrieve the molecule in english from the entry field
     smiles = get_smiles(molecule_name) # Obtain the representation SMILES of the molecule
     if smiles:  # If the representation SMILES is obtained correctly
