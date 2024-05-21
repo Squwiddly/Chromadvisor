@@ -46,6 +46,7 @@ def test_find_functional_groups_invalid_smiles():
 
 ########################################################################################################
 #test the display_molecul_2d function
+@pytest.fixture
 def parent_window():
     # Create a parent window for testing
     parent = Tk()
