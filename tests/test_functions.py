@@ -50,7 +50,8 @@ from unittest import mock
 from unittest.mock import MagicMock
 from chromadvisor_pack.functions import display_molecule_2d
 from tkinter import Tk
-
+from PIL import Image, ImageTk
+import io
 # Importez les modules nécessaires pour le test
 try:
     from rdkit import Chem
