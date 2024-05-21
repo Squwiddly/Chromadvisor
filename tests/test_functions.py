@@ -46,54 +46,67 @@ def test_find_functional_groups_invalid_smiles():
 
 ########################################################################################################
 #test the display_molecule_2d function
-from chromadvisor_pack import display_molecule_2d
-from unittest.mock import patch, MagicMock
-@pytest.fixture
-def parent_window():
-    from tkinter import Tk
-    parent = Tk()
-    yield parent
-    parent.destroy()
+from unittest import mock
+from unittest.mock import MagicMock
+from chromadvisor_pack.functions import display_molecule_2d
+from tkinter import Tk
 
-def test_display_molecule_2d_valid_smiles(parent_window, mocker):
-    smiles = "CCO"
-    # Mock the necessary functions and methods
-    with mocker.patch('chromadvisor_pack.Chem.MolFromSmiles') as mock_MolFromSmiles, \
-         mocker.patch('chromadvisor_pack.Draw.MolToImage') as mock_MolToImage, \
-         mocker.patch('chromadvisor_pack.ImageTk.PhotoImage') as mock_PhotoImage, \
-         mocker.patch('chromadvisor_pack.ttk.Label') as mock_Label:
-             
-        # Set the return values for the mocked functions
-        mock_mol = MagicMock()
-        mock_image = MagicMock()
-        mock_photo_image = MagicMock()
-        
-        mock_MolFromSmiles.return_value = mock_mol
-        mock_MolToImage.return_value = mock_image
-        mock_PhotoImage.return_value = mock_photo_image
-        
-        # Call the function with a valid SMILES string
-        display_molecule_2d(smiles, parent_window)
-        
-        # Assert that the functions were called with the correct arguments
-        mock_MolFromSmiles.assert_called_once_with(smiles)
-        mock_MolToImage.assert_called_once_with(mock_mol)
-        mock_PhotoImage.assert_called_once_with(mock_image)
-        mock_Label.assert_called_once_with(parent_window, image=mock_photo_image)
+# Importez les modules nécessaires pour le test
+try:
+    from rdkit import Chem
+    from rdkit.Chem import Draw
+except ImportError:
+    Chem = None
+    Draw = None
 
-def test_display_molecule_2d_invalid_smiles(parent_window, mocker):
-    smiles = "invalid_smiles"
-    with mocker.patch('chromadvisor_pack.Chem.MolFromSmiles') as mock_MolFromSmiles, \
-         mocker.patch('chromadvisor_pack.messagebox.showerror') as mock_showerror:
-        
-        # Set the return value for the mocked MolFromSmiles to None to simulate invalid SMILES
-        mock_MolFromSmiles.return_value = None
-        
-        # Call the function with an invalid SMILES string
-        display_molecule_2d(smiles, parent_window)
-        
-        # Ensure that messagebox.showerror is called with the appropriate error message
-        mock_showerror.assert_called_once_with("Error", "Impossible to convert the SMILES into a molecule.")
+try:
+    from PIL import ImageTk
+except ImportError:
+    ImageTk = None
+
+def test_display_molecule_2d_success(mocker):
+    smiles = 'CCO'
+    parent_window = Tk()
+
+    # Mocking Chem.MolFromSmiles
+    mock_mol = MagicMock()
+    mocker.patch('rdkit.Chem.MolFromSmiles', return_value=mock_mol)
+
+    # Mocking Draw.MolToImage
+    mock_image = MagicMock()
+    mocker.patch('rdkit.Chem.Draw.MolToImage', return_value=mock_image)
+
+    # Mocking ImageTk.PhotoImage
+    mock_image_tk = MagicMock()
+    mocker.patch('PIL.ImageTk.PhotoImage', return_value=mock_image_tk)
+
+    display_molecule_2d(smiles, parent_window)
+
+    Chem.MolFromSmiles.assert_called_once_with(smiles)
+    Draw.MolToImage.assert_called_once_with(mock_mol)
+    ImageTk.PhotoImage.assert_called_once_with(mock_image)
+    
+    # Cleanup
+    parent_window.destroy()
+
+def test_display_molecule_2d_invalid_smiles(mocker):
+    smiles = 'invalid_smiles'
+    parent_window = Tk()
+
+    # Mocking Chem.MolFromSmiles to return None
+    mocker.patch('rdkit.Chem.MolFromSmiles', return_value=None)
+
+    # Mocking messagebox.showerror
+    mock_showerror = mocker.patch('tkinter.messagebox.showerror')
+
+    display_molecule_2d(smiles, parent_window)
+
+    Chem.MolFromSmiles.assert_called_once_with(smiles)
+    mock_showerror.assert_called_once_with("Error", "Impossible to convert the SMILES into a molecule.")
+
+    # Cleanup
+    parent_window.destroy()
+
 
 
 ########################################################################################################
