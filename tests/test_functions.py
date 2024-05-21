@@ -57,7 +57,7 @@ def parent_window():
 
 def test_display_molecule_2d_valid_smiles(parent_window, mocker):
     smiles = "CCO"
-    with mocker.patch('tkinter.messagebox.showerror') as mock_showerror:
+    with mocker.patch('functions.tkinter.messagebox.showerror') as mock_showerror:
         display_molecule_2d(smiles, parent_window)
         assert mock_showerror.call_count == 0  # Ensure messagebox.showerror is not called
         # Ensure that the molecule image label is created and packed
@@ -65,7 +65,7 @@ def test_display_molecule_2d_valid_smiles(parent_window, mocker):
 
 def test_display_molecule_2d_invalid_smiles(parent_window, mocker):
     smiles = "invalid_smiles"
-    with mocker.patch('tkinter.messagebox.showerror') as mock_showerror:
+    with mocker.patch('functions.tkinter.messagebox.showerror') as mock_showerror:
         display_molecule_2d(smiles, parent_window)
         # Ensure that messagebox.showerror is called with the appropriate error message
         mock_showerror.assert_called_once_with("Error", "Impossible to convert the SMILES into a molecule.")
