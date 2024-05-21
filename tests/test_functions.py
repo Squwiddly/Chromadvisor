@@ -45,7 +45,8 @@ def test_find_functional_groups_invalid_smiles():
     assert result is None
 
 ########################################################################################################
-#test the display_molecul_2d function
+#test the display_molecule_2d function
+from chromadvisor_pack import display_molecule_2d
 from tkinter import Tk
 @pytest.fixture
 def parent_window():
