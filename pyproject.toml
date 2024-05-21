@@ -38,6 +38,7 @@ test = [
     "pytest-cov",
     "tox",
     "genbadge[coverage]",
+    "pytest-mock",
 ]
 doc = [
     "furo",
