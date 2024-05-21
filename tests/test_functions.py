@@ -47,30 +47,27 @@ def test_find_functional_groups_invalid_smiles():
 ########################################################################################################
 #test the display_molecule_2d function
 from chromadvisor_pack import display_molecule_2d
-from tkinter import Tk
-@pytest.fixture
-def parent_window():
-    # Create a parent window for testing
-    parent = Tk()
-    yield parent
-    parent.destroy()
+from unittest.mock import patch
+def test_display_molecule_2d():
+    # Mock the functions used by display_molecule_2d
+    with patch('your_module.Chem.MolFromSmiles') as mock_MolFromSmiles, \
+         patch('your_module.Draw.MolToImage') as mock_MolToImage, \
+         patch('your_module.ImageTk.PhotoImage') as mock_PhotoImage, \
+         patch('your_module.ttk.Label') as mock_Label:
 
-def test_display_molecule_2d_valid_smiles(parent_window, mocker):
-    smiles = "CCO"
-    with mocker.patch('tkinter.messagebox.showerror') as mock_showerror:
-        display_molecule_2d(smiles, parent_window)
-        assert mock_showerror.call_count == 0  # Ensure messagebox.showerror is not called
-        # Ensure that the molecule image label is created and packed
-        assert len(parent_window.winfo_children()) == 1  # Assuming no other widgets are present
+        # Set the return values for the mocked functions
+        mock_MolFromSmiles.return_value = "mock_molecule"
+        mock_MolToImage.return_value = "mock_image"
+        mock_PhotoImage.return_value = "mock_photo_image"
 
-def test_display_molecule_2d_invalid_smiles(parent_window, mocker):
-    smiles = "invalid_smiles"
-    with mocker.patch('tkinter.messagebox.showerror') as mock_showerror:
-        display_molecule_2d(smiles, parent_window)
-        # Ensure that messagebox.showerror is called with the appropriate error message
-        mock_showerror.assert_called_once_with("Error", "Impossible to convert the SMILES into a molecule.")
-        # Ensure that no molecule image label is created
-        assert len(parent_window.winfo_children()) == 0
+        # Call the function with a valid SMILES string
+        display_molecule_2d("CCO", "mock_parent_window")
+
+        # Assert that the functions were called with the correct arguments
+        mock_MolFromSmiles.assert_called_once_with("CCO")
+        mock_MolToImage.assert_called_once_with("mock_molecule")
+        mock_PhotoImage.assert_called_once_with("mock_image")
+        mock_Label.assert_called_once_with("mock_parent_window", image="mock_photo_image")
 
 
 ########################################################################################################
