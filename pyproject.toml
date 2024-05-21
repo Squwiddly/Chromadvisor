@@ -57,6 +57,8 @@ packages = ["src/chromadvisor_pack"]
 dependencies = ["pytest"]
 
 [tool.pytest.ini_options]
+addopts = "--cov=chromadvisor_pack --cov-report=term-missing --cov-omit=*functions.py:on_submit"
+
 testpaths = [
     "tests",
 ]
