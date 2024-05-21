@@ -64,6 +64,11 @@ try:
 except ImportError:
     ImageTk = None
 
+def create_test_image():
+    # Créer une petite image de test en mémoire
+    img = Image.new('RGB', (10, 10), color = 'red')
+    return ImageTk.PhotoImage(img)
+
 def test_display_molecule_2d_success(mocker):
     smiles = 'CCO'
     parent_window = Tk()
@@ -72,13 +77,12 @@ def test_display_molecule_2d_success(mocker):
     mock_mol = MagicMock()
     mocker.patch('rdkit.Chem.MolFromSmiles', return_value=mock_mol)
 
-    # Mocking Draw.MolToImage
-    mock_image = MagicMock()
+    # Mocking Draw.MolToImage to return an image
+    mock_image = create_test_image()
     mocker.patch('rdkit.Chem.Draw.MolToImage', return_value=mock_image)
 
-    # Mocking ImageTk.PhotoImage
-    mock_image_tk = MagicMock()
-    mocker.patch('PIL.ImageTk.PhotoImage', return_value=mock_image_tk)
+    # Mocking ImageTk.PhotoImage to use the real image
+    mocker.patch('PIL.ImageTk.PhotoImage', return_value=mock_image)
 
     display_molecule_2d(smiles, parent_window)
 
