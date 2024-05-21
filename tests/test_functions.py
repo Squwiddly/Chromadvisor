@@ -165,4 +165,65 @@ def test_recommend_solvant_invalid():
     assert result == (None, "Invalid SMILES")
 
 
+########################################################################################################
+#test the on_submit function
+from unittest import mock
+from chromadvisor_pack.functions import on_submit
+
+def test_on_submit_success(mocker):
+    # Mocking get_smiles function to return a valid SMILES
+    mocker.patch('chromadvisor_pack.functions.get_smiles', return_value='CCO')
+
+    # Mocking find_functional_groups function to return some functional groups
+    mocker.patch('chromadvisor_pack.functions.find_functional_groups', return_value={'alcohol': {'positions': [3, 7]}})
+
+    # Mocking calculate_logp_and_recommend_solvent function to return logP and recommendation
+    mocker.patch('chromadvisor_pack.functions.calculate_logp_and_recommend_solvent', return_value=(1.5, 'Acetonitrile'))
+
+    # Mocking tkinter functions
+    mock_messagebox = mocker.patch('chromadvisor_pack.functions.messagebox')
+    mock_toplevel = mocker.patch('chromadvisor_pack.functions.tk.Toplevel')
+    mock_text = mocker.patch('chromadvisor_pack.functions.tk.Text')
+    mock_label = mocker.patch('chromadvisor_pack.functions.ttk.Label')
+
+    # Calling the function
+    on_submit()
+
+    # Assertions
+    assert mock_messagebox.showinfo.call_count == 0  # No need to show info message if functional groups are found
+    assert mock_messagebox.showerror.call_count == 0  # No need to show error message if molecule is found
+    mock_toplevel.assert_called_once()  # Check if Toplevel window is created
+    mock_text.assert_called()  # Check if Text widgets are created
+    mock_label.assert_called()  # Check if Label widgets are created
+
+def test_on_submit_no_functional_groups(mocker):
+    # Mocking get_smiles function to return a valid SMILES
+    mocker.patch('chromadvisor_pack.functions.get_smiles', return_value='CCO')
+
+    # Mocking find_functional_groups function to return no functional groups
+    mocker.patch('chromadvisor_pack.functions.find_functional_groups', return_value={})
+
+    # Mocking tkinter messagebox
+    mock_messagebox = mocker.patch('chromadvisor_pack.functions.messagebox')
+
+    # Calling the function
+    on_submit()
+
+    # Assertions
+    mock_messagebox.showinfo.assert_called_once_with("No functional groups found in the molecule.")
+
+def test_on_submit_molecule_not_found(mocker):
+    # Mocking get_smiles function to return None (molecule not found)
+    mocker.patch('chromadvisor_pack.functions.get_smiles', return_value=None)
+
+    # Mocking tkinter messagebox
+    mock_messagebox = mocker.patch('chromadvisor_pack.functions.messagebox')
+
+    # Calling the function
+    on_submit()
+
+    # Assertions
+    mock_messagebox.showerror.assert_called_once_with("Error", "Molecule not found. Please try another name.")
+
+
 
