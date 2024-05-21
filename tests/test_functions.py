@@ -13,7 +13,7 @@ def test_get_smiles_not_found():
     result = get_smiles(molecule_name)
     assert result is None
 
-def test_get_smiles_error():
+def test_get_smiles_error(mocker):
     # Mock the get_compounds function to raise an exception
     mock_get_compounds = mocker.patch('pubchempy.get_compounds', side_effect=Exception("Test Exception"))
     result = get_smiles("invalid_molecule_name")
