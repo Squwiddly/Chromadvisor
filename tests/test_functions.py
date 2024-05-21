@@ -50,10 +50,10 @@ from chromadvisor_pack import display_molecule_2d
 from unittest.mock import patch
 def test_display_molecule_2d():
     # Mock the functions used by display_molecule_2d
-    with patch('your_module.Chem.MolFromSmiles') as mock_MolFromSmiles, \
-         patch('your_module.Draw.MolToImage') as mock_MolToImage, \
-         patch('your_module.ImageTk.PhotoImage') as mock_PhotoImage, \
-         patch('your_module.ttk.Label') as mock_Label:
+    with patch('chromadvisor_pack.Chem.MolFromSmiles') as mock_MolFromSmiles, \
+         patch('chromadvisor_pack.Draw.MolToImage') as mock_MolToImage, \
+         patch('chromadvisor_pack.ImageTk.PhotoImage') as mock_PhotoImage, \
+         patch('chromadvisor_pack.ttk.Label') as mock_Label:
 
         # Set the return values for the mocked functions
         mock_MolFromSmiles.return_value = "mock_molecule"
