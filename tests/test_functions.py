@@ -94,7 +94,7 @@ def test_display_molecule_2d_invalid_smiles(parent_window, mocker):
         
         # Ensure that messagebox.showerror is called with the appropriate error message
         mock_showerror.assert_called_once_with("Error", "Impossible to convert the SMILES into a molecule.")
-``
+
 
 ########################################################################################################
 #test the log and recommendation function
