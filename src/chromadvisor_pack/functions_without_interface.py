@@ -285,7 +285,7 @@ def calculate_logp_and_recommend_solvent(smiles):
 
 
 # Function to display the 2D representation of a molecule
-def display_molecule_2d(smiles, parent_window):
+def display_molecule_2d(smiles):
     """
     Display the 2D representation of a molecule in a Tkinter window.
 
