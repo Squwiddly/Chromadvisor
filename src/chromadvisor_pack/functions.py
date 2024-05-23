@@ -15,7 +15,7 @@ import py3Dmol
 
 
 def get_smiles(molecule_name):
-   """
+    """
     Retrieve the SMILES representation of a molecule from its name.
 
     Parameters
