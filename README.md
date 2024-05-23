@@ -22,9 +22,6 @@ from chromadvisor.functions import find_functional_groups
 result = find_functional_groups(data)
 ```
 
-This usage example shows how to quickly leverage the package's main functionality with just one line of code (or a few lines of code). 
-After importing the `find_functional_groups`, you simply pass in your `data` and get the `result` (this is just an example, the package has lots of other functions). 
-
 ## 👩‍💻 Installation
 
 Create a new environment, you may also give the environment a different name. 
