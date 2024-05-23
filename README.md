@@ -23,10 +23,10 @@ from chromadvisor.functions import get_smiles, find_functional_groups, calculate
 SMILES = get_smiles(?)
 
 #Find the functional groups of the submitted molecule
-fctional_grps = find_functional_groups(SMILES)
+functional_groups = find_functional_groups(SMILES)
 
 #Display the 2D visualization of the molecule
-2D_mol = display_molecule_2d(SMILES)
+2d_mol = display_molecule_2d(SMILES)
 
 #Give the log(P) and the eluent recommended for a chromatography
 logP_&_recommendation = calculate_logp_and_recommend_solvent(SMILES)
