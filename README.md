@@ -12,7 +12,7 @@ Chromadvisor
 <br>
 
 
-Recommend the eluant for a chromatography based on the desired molecule
+(Recommend the eluant for a chromatography based on the desired molecule) A CHANGER ABSOLUMENT 
 
 ## 🔥 Usage
 
