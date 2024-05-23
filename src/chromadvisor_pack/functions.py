@@ -268,11 +268,8 @@ def calculate_logp_and_recommend_solvent(smiles):
         tuple: A tuple containing the logP value and the recommended solvent.
 
     Examples:
-        >>> logp, recommendation = calculate_logp_and_recommend_solvent("CCO")
-        >>> print(logp)
-        0.17
-        >>> print(recommendation)
-        Use a mix of DCM/MeOH or a mix of ethyl acetate/hexane.
+        This function calculates the logP value and recommends a solvent for chromatography.
+        >>> calculate_logp_and_recommend_solvent("CCO")
     """
     molecule = Chem.MolFromSmiles(smiles)
     if molecule is None:
