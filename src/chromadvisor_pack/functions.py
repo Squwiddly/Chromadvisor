@@ -321,15 +321,14 @@ def generate_3d_structure(smiles):
     Generate the 3D structure of a molecule and display it in a 3D viewer.
 
     Args:
-    smiles (str): The SMILES representation of the molecule.
+        smiles (str): The SMILES representation of the molecule.
 
     Returns:
-    None
+        None
 
     Examples:
-    --------
-    >>> generate_3d_structure("CCO")
-    # This will display the 3D structure of ethanol in a 3D viewer.
+        This function is typically called with the SMILES representation of a molecule.
+        >>> generate_3d_structure("CCO")
     """
     # Convert the SMILES into an RDKIT molecular object
     mol = Chem.MolFromSmiles(smiles)
