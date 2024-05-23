@@ -35,9 +35,9 @@ calculate_logp_and_recommend_solvent(SMILES)
 #USING THE INTERFACE ?
 ```
 
-## 👩‍💻 Installation
+## 👩‍💻 Installation AVANT USAGE
 
-Create a new environment, you may also give the environment a different name. 
+Create a new environment, you may also give the environment a different name. METTRE COPIER DEMANDER A CHATGPT
 
 ```
 conda create -n chromadvisor_pack python=3.10 
