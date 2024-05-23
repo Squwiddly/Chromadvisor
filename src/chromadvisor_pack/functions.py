@@ -138,7 +138,7 @@ def find_functional_groups(smiles):
             pattern_to_remove = Chem.MolFromSmarts(pattern_to_remove)
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Imide : /!\ fonctionne pas. pas détecté ("2x amide")
+        #Imide :
         if 'imide' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('C(=O)NC(=O)')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
@@ -173,7 +173,7 @@ def find_functional_groups(smiles):
             pattern_to_remove = Chem.MolFromSmarts('S(=O)')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
        
-        #Aldehyde : problem with C(=O)C(=O) /!\
+        #Aldehyde : 
         if 'aldehyde' in functional_groups :
             # Define SMARTS to identify aldehydes and adjacent atoms
             aldehyde_pattern = Chem.MolFromSmarts('[CX3H1](=O)[#6][!#1]')
@@ -256,7 +256,7 @@ def find_functional_groups(smiles):
     functional_groups2.update(functional_groups)
     return functional_groups2
 
-# Function to calculate logP and recommend solvent
+
 def calculate_logp_and_recommend_solvent(smiles):
     """
     Calculate the logP value of a molecule and recommend a solvent for chromatography.
