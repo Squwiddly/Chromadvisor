@@ -294,16 +294,15 @@ def display_molecule_2d(smiles, parent_window):
     Display the 2D representation of a molecule in a Tkinter window.
 
     Args:
-    smiles (str): The SMILES representation of the molecule.
-    parent_window: The parent Tkinter window to display the molecule in.
+        smiles (str): The SMILES representation of the molecule.
+        parent_window: The parent Tkinter window to display the molecule in.
 
     Returns:
-    None
+        None
 
     Examples:
-    --------
-    >>> display_molecule_2d("CCO", parent_window)
-    # This will display the 2D structure of ethanol in the provided Tkinter window.
+        This function is typically called with the SMILES representation of a molecule and a Tkinter window.
+        >>> display_molecule_2d("CCO", parent_window)
     """
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
