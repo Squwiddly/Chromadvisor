@@ -20,7 +20,7 @@ Chromadvisor
 from chromadvisor.functions import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d, on_submit
 
 #Obtain the smiles of an english name molecule
-SMILES = get_smiles(?)
+#SMILES = get_smiles(?)
 
 #Find the functional groups of the submitted molecule
 find_functional_groups(SMILES)
@@ -32,7 +32,7 @@ display_molecule_2d(SMILES)
 calculate_logp_and_recommend_solvent(SMILES)
 
 #Use it
-USING THE INTERFACE ?
+#USING THE INTERFACE ?
 ```
 
 ## 👩‍💻 Installation
