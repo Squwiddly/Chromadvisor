@@ -63,7 +63,7 @@ testpaths = [
 
 [tool.coverage.run]
 omit = [
-    '__init__.py', 'functions_without_interface.py'
+    '__init__.py'
 ]
 
 [tool.coverage.report]
