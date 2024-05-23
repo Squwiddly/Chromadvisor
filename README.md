@@ -17,9 +17,22 @@ Chromadvisor
 ## 🔥 Usage
 
 ```python
-from chromadvisor.functions import find_functional_groups
+from chromadvisor.functions import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d, on_submit
 
-result = find_functional_groups(data)
+#Obtain the smiles of an english name molecule
+SMILES = get_smiles(?)
+
+#Find the functional groups of the submitted molecule
+fctional_grps = find_functional_groups(SMILES)
+
+#Display the 2D visualization of the molecule
+2D_mol = display_molecule_2d(SMILES)
+
+#Give the log(P) and the eluent recommended for a chromatography
+logP_&_recommendation = calculate_logp_and_recommend_solvent(SMILES)
+
+#Use it
+USING THE INTERFACE ?
 ```
 
 ## 👩‍💻 Installation
