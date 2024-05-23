@@ -312,21 +312,19 @@ def display_molecule_2d(smiles):
     display(img)
 
 #If the programm is run on a file.ipynb, this function would work. On our side, it did not work in a file.py
-# Function to generate the 3D structure of a molecule
 def generate_3d_structure(smiles):
     """
-    Generate the 3D structure of a molecule and display it in a 3D viewer, in the notebook.
+    Generate the 3D structure of a molecule and display it in a 3D viewer.
 
     Args:
-    smiles (str): The SMILES representation of the molecule.
+        smiles (str): The SMILES representation of the molecule.
 
     Returns:
-    None
+        None
 
     Examples:
-    --------
-    >>> generate_3d_structure("CCO")
-    # This will display the 3D structure of ethanol in a 3D viewer, in the notebook.
+        This function is typically called with the SMILES representation of a molecule.
+        >>> generate_3d_structure("CCO")
     """
     # Convert the SMILES in an molecular RDKit
     mol = Chem.MolFromSmiles(smiles)
