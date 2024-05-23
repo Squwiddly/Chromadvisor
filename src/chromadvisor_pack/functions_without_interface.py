@@ -291,18 +291,18 @@ def calculate_logp_and_recommend_solvent(smiles):
 
 def display_molecule_2d(smiles):
     """
-    Display the 2D representation of a molecule in the notebook.
+    Display the 2D representation of a molecule in a Tkinter window.
 
     Args:
-    smiles (str): The SMILES representation of the molecule.
+        smiles (str): The SMILES representation of the molecule.
+        parent_window: The parent Tkinter window to display the molecule in.
 
     Returns:
-    None
+        None
 
     Examples:
-    --------
-    >>> display_molecule_2d("CCO")
-    # This will display the 2D structure of ethanol in the notebook.
+        This function is typically called with the SMILES representation of a molecule and a Tkinter window.
+        >>> display_molecule_2d("CCO", parent_window)
     """
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
