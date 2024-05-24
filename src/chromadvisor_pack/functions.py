@@ -348,7 +348,7 @@ def generate_3d_structure(smiles):
 
 
 # Callback function for the submit button
-def on_submit(event=None):
+def on_submit(entry, root, event=None):
     """
     Callback function for the submit button.
 
@@ -460,11 +460,11 @@ entry = ttk.Entry(root, width=50)
 entry.grid(row=0, column=1, padx=10, pady=5)
 
 # Creating a submit button to trigger the analysis
-submit_button = ttk.Button(root, text="Submit", command=on_submit)
+submit_button = ttk.Button(root, text="Submit", command=lambda: on_submit(entry, root))
 submit_button.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
 
 # Binding the "Enter" key to the submit function
-root.bind("<Return>", on_submit)
+root.bind("<Return>", lambda event: on_submit(entry, root, event))
 
 # Starting the main event loop for the GUI
 root.mainloop()
