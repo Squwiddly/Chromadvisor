@@ -47,8 +47,6 @@ If you need jupyter lab, install it
 ## 🔥 Usage
 
 ```python
-from tkinter import tk
-from tkinter import ttk
 from src.chromadvisor_pack.functions import on_submit
 
 #Below is the code to create and apply the interface to all the functions
