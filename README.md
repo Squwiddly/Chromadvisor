@@ -16,9 +16,9 @@ Chromadvisor
 
 ## 👩‍💻 Installation
 
-Create a new environment, you may also give the environment a different name. METTRE COPIER DEMANDER A CHATGPT
+Create a new environment, you may also give the environment a different name.
 ```
-git clone https://github.com/VOTRE_GITHUB_USERNAME/Chromadvisor.git
+git clone https://github.com/Squwiddly/Chromadvisor.git
 cd Chromadvisor
 ```
 
