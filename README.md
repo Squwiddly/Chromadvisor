@@ -46,7 +46,7 @@ from chromadvisor.functions import on_submit
 #Below is the code to create and apply the interface to all the functions
 # Crate a GUI window
 root = tk.Tk()
-root.title("Molecule analysis") # Define the title of the window
+root.title("Molecule analysis")
 
 # Style for the widgets ttk
 style = ttk.Style()
@@ -70,8 +70,9 @@ root.bind("<Return>", on_submit)
 # Starting the main event loop for the GUI
 root.mainloop()
 ```
-OR, if you don't want the interface
-```
+OR, if you don't want the interface :
+
+```python
 from chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d
 
 # Obtain the SMILES of a molecule from its english name (salicylic acid, b12, ethanol,...)
