@@ -49,6 +49,10 @@ If you need jupyter lab, install it
 ```python
 from src.chromadvisor_pack.functions import on_submit
 
+# Wrapper function to pass entry and root to on_submit
+def on_submit_wrapper(event=None):
+    on_submit(entry, root)
+
 #Below is the code to create and apply the interface to all the functions
 # Crate a GUI window
 root = tk.Tk()
@@ -67,11 +71,11 @@ entry = ttk.Entry(root, width=50)
 entry.grid(row=0, column=1, padx=10, pady=5)
 
 # Creating a submit button to trigger the analysis
-submit_button = ttk.Button(root, text="Submit", command=on_submit)
+submit_button = ttk.Button(root, text="Submit", command=lambda: on_submit(entry, root))
 submit_button.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
 
 # Binding the "Enter" key to the submit function
-root.bind("<Return>", on_submit)
+root.bind("<Return>", on_submit(entry,root))
 
 # Starting the main event loop for the GUI
 root.mainloop()
