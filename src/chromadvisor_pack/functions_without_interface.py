@@ -11,16 +11,24 @@ import py3Dmol
 from IPython.display import display, Image
 
 
-# Function to retrieve the SMILES representation of a molecule given its name
 def get_smiles(molecule_name):
     """
     Retrieve the SMILES representation of a molecule from its name.
 
-    Args:
-    molecule_name (str): The name of the molecule in English.
+    Parameters
+    ----------
+    molecule_name : str
+        The name of the molecule in English.
 
-    Returns:
-    str: The SMILES representation of the molecule, or None if the molecule is not found.
+    Returns
+    -------
+    str
+        The SMILES representation of the molecule, or None if the molecule is not found.
+
+    Examples
+    --------
+    >>> get_smiles("water")
+    'O'
     """
     try: # Attempt to get compounds from PubChem by name
         results = pcp.get_compounds(molecule_name, 'name')
@@ -32,8 +40,6 @@ def get_smiles(molecule_name):
     except Exception as e:
         return "An error occurred: {}".format(str(e)) # Print an error message if an exception occurs
 
-
-#Then find the functional groups of a molecule and show it on 2D
 
 # List of the sub-structure SMARTS representing the functional groups of molecules
 functional_group_smarts = {
@@ -52,13 +58,10 @@ functional_group_smarts = {
     "sulfinate": "[$([#16X3](=[OX1])[OX2H0]),$([#16X3+]([OX1-])[OX2H0])]",
     "sulfoxide": "[$([#16X3](=[OX1])([#6])[#6]),$([#16X3+]([OX1-])([#6])[#6])]",
     "sulfoxide": "[$([#16X3]=[OX1]),$([#16X3+][OX1-])]",
-
     "aldehyde": "[CX3H1](=O)[#6]",
     "ketone": "[CX3](=O)[#6]",
-
     "ammonia": "[NX3][CX3]=[NX3+]",
     "ether": "[OD2]([#6])[#6]",
-
     "sulfonamide": "[$([#16X4]([NX3])(=[OX1])(=[OX1])[#6]),$([#16X4+2]([NX3])([OX1-])([OX1-])[#6])]",
     "nitrile": "[NX1]#[CX2]",
     "enamine": "[NX3][CX3]=[CX3]",
@@ -71,37 +74,39 @@ functional_group_smarts = {
     "thiol": "[#16X2H] ",
     "sulfide": "[SX2]",
     "sulfide": "[#16X2H0]",
-
-    #Est ce qu'on garde alcool ET hydroxyl ? on peut regrouper les smarts
     "alcohol": "[OX2H][CX4]",
     "hydroxyl": "[O]", #/!\ attention juste un O !!
 }
 
-# Function to find the functional groups of a molecule
 def find_functional_groups(smiles):
     """
     Find the functional groups of a molecule given its SMILES representation.
 
-    Args:
-    smiles (str): The SMILES representation of the molecule.
+    Parameters
+    ----------
+    smiles : str
+        The SMILES representation of the molecule.
 
-    Returns:
-    dict: A dictionary containing information about the detected functional groups.
+    Returns
+    -------
+    dict
+        A dictionary containing information about the detected functional groups.
+
+    Examples
+    --------
+    >>> find_functional_groups("CC(=O)O")
+    {'carboxylic acid': {'count': 1, 'positions': ((1, 2, 3),)}}
     """
     functional_groups = {}
     functional_groups2 = {}
-
     # Initialize a dictionary to store the number of each functional group
     functional_groups_count = {key: 0 for key in functional_group_smarts.keys()}
-
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
         print("Error : Impossible to convert the SMILES into a molecule.")
         return None
 
-   
     for name, smarts in functional_group_smarts.items():
-
         #Eliminate the functionnal group of the rdkit molecular rdkit once the fuction has detected it
         #To avoid repetition. /!\ problèmes si cycle !!
 
@@ -115,7 +120,7 @@ def find_functional_groups(smiles):
             pattern_to_remove = Chem.MolFromSmarts('C(=O)O')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Acyl halide : a simplifier mais là j'arrive pas. est ce que faut différencier les différents types d'acyl halide (avec Br, I, ...) quand on les compte ??
+        #Acyl halide : 
         if 'acyl halide' in functional_groups :
             pattern_to_remove = 'BrC(=O)'
             pattern_to_remove = Chem.MolFromSmarts(pattern_to_remove)
@@ -130,12 +135,12 @@ def find_functional_groups(smiles):
             pattern_to_remove = Chem.MolFromSmarts(pattern_to_remove)
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Imide : /!\ fonctionne pas. pas détecté ("2x amide")
+        #Imide : 
         if 'imide' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('C(=O)NC(=O)')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
        
-        #Ester :  supprimé par a.carboxylique donc non détecté quand ya les 2
+        #Ester :  
         if 'ester' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('C(=O)O')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
@@ -162,19 +167,17 @@ def find_functional_groups(smiles):
             pattern_to_remove = Chem.MolFromSmarts('S(=O)O')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #je crois ca détecte pas amine (?!)
-
-        #Sulfinate : jsp comment faire la diff avec sulfinic acid
+        #Sulfinate : 
         if 'sulfinate' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('S(=O)O')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Sulfoxide : utile ?
+        #Sulfoxide : 
         if 'sulfoxide' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('S(=O)')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
        
-        #Aldehyde : probleme avec C(=O)C(=O) /!\
+        #Aldehyde : 
         if 'aldehyde' in functional_groups :
             # Define SMARTS to identify aldehydes and adjacent atoms
             aldehyde_pattern = Chem.MolFromSmarts('[CX3H1](=O)[#6][!#1]')
@@ -199,42 +202,42 @@ def find_functional_groups(smiles):
             pattern_to_remove = Chem.MolFromSmarts('C(C=O)C')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Ammonia : ammonia pas détecté ??
+        #Ammonia : 
         if 'ammonia' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('N')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Ether : utile ?
+        #Ether : 
         if 'ether' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('COC')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Alcohol : utile?
+        #Alcohol :
         if 'alcohol' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('CO')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Hydroxyl : capte pas quand ca détecte alcohol et quand hydroxyl
+        #Hydroxyl : 
         if 'hydroxyl' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('CO')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Sulfonamide : utile?
+        #Sulfonamide : 
         if 'sulfonamide' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('S(=O)(=O)N')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Nitrile : utile ?
+        #Nitrile : 
         if 'nitrile' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('CN')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Enamine : utile? pas testé
+        #Enamine : 
         if 'enamine' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('C=CN')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
 
-        #Amine : utile? meme que ammonia??? pas détecté
+        #Amine : 
         if 'amine' in functional_groups :
             pattern_to_remove = Chem.MolFromSmarts('N')
             mol = Chem.DeleteSubstructs(mol, pattern_to_remove)
@@ -256,19 +259,21 @@ def find_functional_groups(smiles):
             }
                
     functional_groups2.update(functional_groups)
-
     return functional_groups2
 
-# Function to calculate logP and recommend solvent
 def calculate_logp_and_recommend_solvent(smiles):
     """
     Calculate the logP value of a molecule and recommend a solvent for chromatography.
 
     Args:
-    smiles (str): The SMILES representation of the molecule.
+        smiles (str): The SMILES representation of the molecule.
 
     Returns:
-    tuple: A tuple containing the logP value and the recommended solvent.
+        tuple: A tuple containing the logP value and the recommended solvent.
+
+    Examples:
+        This function calculates the logP value and recommends a solvent for chromatography.
+        >>> calculate_logp_and_recommend_solvent("CCO")
     """
     molecule = Chem.MolFromSmiles(smiles)
     if molecule is None:
@@ -284,14 +289,20 @@ def calculate_logp_and_recommend_solvent(smiles):
     return logp, recommendation
 
 
-# Function to display the 2D representation of a molecule
 def display_molecule_2d(smiles):
     """
     Display the 2D representation of a molecule in a Tkinter window.
 
     Args:
-    smiles (str): The SMILES representation of the molecule.
-    parent_window: The parent Tkinter window to display the molecule in.
+        smiles (str): The SMILES representation of the molecule.
+        parent_window: The parent Tkinter window to display the molecule in.
+
+    Returns:
+        None
+
+    Examples:
+        This function is typically called with the SMILES representation of a molecule and a Tkinter window.
+        >>> display_molecule_2d("CCO", parent_window)
     """
     mol = Chem.MolFromSmiles(smiles)
     if mol is None:
@@ -301,13 +312,19 @@ def display_molecule_2d(smiles):
     display(img)
 
 #If the programm is run on a file.ipynb, this function would work. On our side, it did not work in a file.py
-# Function to generate the 3D structure of a molecule
 def generate_3d_structure(smiles):
     """
     Generate the 3D structure of a molecule and display it in a 3D viewer.
 
     Args:
-    smiles (str): The SMILES representation of the molecule.
+        smiles (str): The SMILES representation of the molecule.
+
+    Returns:
+        None
+
+    Examples:
+        This function is typically called with the SMILES representation of a molecule.
+        >>> generate_3d_structure("CCO")
     """
     # Convert the SMILES in an molecular RDKit
     mol = Chem.MolFromSmiles(smiles)
@@ -333,11 +350,11 @@ def generate_3d_structure(smiles):
 molecule_name = input("Enter the name of your desired molecule (in English) :")# Retrieve the molecule in english from the entry field
 smiles = get_smiles(molecule_name)
 print(smiles)
-if smiles:  # Si la représentation SMILES est obtenue avec succès
+if smiles:
         functional_groups = find_functional_groups(smiles)  # Trouver les groupes fonctionnels dans la molécule
         logp, recommendation = calculate_logp_and_recommend_solvent(smiles)  # Calculer le logP et recommander le solvant
    
-        if functional_groups:# Si des groupes fonctionnels sont trouvés, ils sont affichés
+        if functional_groups: # If some functional groups are found, they will be displayed
             functional_groups_str = ''
             for name, data in functional_groups.items():
                 count = len(data["positions"])
@@ -351,7 +368,7 @@ if smiles:  # Si la représentation SMILES est obtenue avec succès
 
         print(f"Log(P): {logp}")
         print("Recommendation:", recommendation)
-        # Afficher l'image en 2D de la molécule dans l'interface et 3D dans le notebook
+        # Display the 2D and 3D image of the molecule in the notebook
         display_molecule_2d(smiles)
         generate_3d_structure(smiles) #erase if it does not work on a file.py
 else:
