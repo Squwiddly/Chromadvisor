@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/banner.png" alt="Project Logo">
+  <img src="assets/Chromadvisor_logo.png" alt="Project Logo">
 </div>
 
 
