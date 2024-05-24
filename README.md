@@ -14,30 +14,13 @@ Chromadvisor
 
 (Recommend the eluant for a chromatography based on the desired molecule) A CHANGER ABSOLUMENT 
 
-## 🔥 Usage
-
-```python
-from chromadvisor.functions import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d, on_submit
-
-#Obtain the smiles of an english name molecule
-#SMILES = get_smiles(?)
-
-#Find the functional groups of the submitted molecule
-find_functional_groups(SMILES)
-
-#Display the 2D visualization of the molecule
-display_molecule_2d(SMILES)
-
-#Give the log(P) and the eluent recommended for a chromatography
-calculate_logp_and_recommend_solvent(SMILES)
-
-#Use it
-#USING THE INTERFACE ?
-```
-
-## 👩‍💻 Installation AVANT USAGE
+## 👩‍💻 Installation
 
 Create a new environment, you may also give the environment a different name. METTRE COPIER DEMANDER A CHATGPT
+```
+git clone https://github.com/VOTRE_GITHUB_USERNAME/Chromadvisor.git
+cd Chromadvisor
+```
 
 ```
 conda create -n chromadvisor_pack python=3.10 
@@ -54,6 +37,57 @@ If you need jupyter lab, install it
 (chromadvisor_pack) $ pip install jupyterlab
 ```
 
+
+## 🔥 Usage
+
+```python
+from chromadvisor.functions import on_submit
+
+#Below is the code to create and apply the interface to all the functions
+# Crate a GUI window
+root = tk.Tk()
+root.title("Molecule analysis") # Define the title of the window
+
+# Style for the widgets ttk
+style = ttk.Style()
+style.configure("TButton", font=("Helvetica", 12))
+style.configure("TLabel", font=("Helvetica", 14))
+
+# Creating a label and an entry field for entering the SMILES representation
+label = ttk.Label(root, text="Enter the name of your desired molecule (in English) :")
+label.configure(font=("Helvetica", 14))
+label.grid(row=0, column=0, padx=10, pady=5, sticky="w")
+entry = ttk.Entry(root, width=50)
+entry.grid(row=0, column=1, padx=10, pady=5)
+
+# Creating a submit button to trigger the analysis
+submit_button = ttk.Button(root, text="Submit", command=on_submit)
+submit_button.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
+
+# Binding the "Enter" key to the submit function
+root.bind("<Return>", on_submit)
+
+# Starting the main event loop for the GUI
+root.mainloop()
+```
+OR, if you don't want the interface
+```
+from chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d
+
+# Obtain the SMILES of a molecule from its english name (salicylic acid, b12, ethanol,...)
+smiles = get_smiles("benzene")
+
+# Find the functional groups of a submitted molecule
+functional_groups = find_functional_groups(smiles)
+
+# Display the 2D visualisation of the molecule
+display_molecule_2d(smiles)
+
+# Give the log(P) and the recommended eluent for a chromatgraphy
+logp, solvent = calculate_logp_and_recommend_solvent(smiles)
+
+print(f"LogP: {logp}, Solvent: {solvent}")
+```
 
 ## 🛠️ Development installation
 
@@ -84,7 +118,7 @@ To install the package, run
 ```
 (conda_env) $ pip install tox
 (conda_env) $ tox
+(conda_env) $ coverage html
 ```
-
 
 
