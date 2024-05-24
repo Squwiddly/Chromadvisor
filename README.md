@@ -79,7 +79,7 @@ root.mainloop()
 OR, if you don't want the interface :
 
 ```python
-from chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d
+from src.chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d
 
 # Obtain the SMILES of a molecule from its english name (salicylic acid, b12, ethanol,...)
 smiles = get_smiles("benzene")
