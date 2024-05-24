@@ -31,6 +31,12 @@ conda activate chromadvisor_pack
 (chromadvisor_pack) $ pip install .
 ```
 
+You will also need to install tkinter, which is the module for the interface :
+
+```
+(chromadvisor_pack) $ conda install -c anaconda tk
+```
+
 If you need jupyter lab, install it 
 
 ```
