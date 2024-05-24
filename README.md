@@ -47,7 +47,7 @@ If you need jupyter lab, install it
 ## 🔥 Usage
 
 ```python
-from chromadvisor.functions import on_submit
+from src.chromadvisor_pack.functions import on_submit
 
 #Below is the code to create and apply the interface to all the functions
 # Crate a GUI window
