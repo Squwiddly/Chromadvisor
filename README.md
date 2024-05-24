@@ -28,7 +28,7 @@ conda create -n chromadvisor_pack python=3.10
 
 ```
 conda activate chromadvisor_pack
-(conda_env) $ pip install .
+(chromadvisor_pack) $ pip install .
 ```
 
 If you need jupyter lab, install it 
@@ -117,9 +117,9 @@ To install the package, run
 ### Run tests and coverage
 
 ```
-(conda_env) $ pip install tox
-(conda_env) $ tox
-(conda_env) $ coverage html
+(chromadvisor_pack) $ pip install tox
+(chromadvisor_pack) $ tox
+(chromadvisor_pack) $ coverage html
 ```
 
 
