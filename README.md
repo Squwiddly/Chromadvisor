@@ -79,21 +79,34 @@ root.mainloop()
 OR, if you don't want the interface :
 
 ```python
-from src.chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d
+from src.chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d, generate_3d_structure
 
-# Obtain the SMILES of a molecule from its english name (salicylic acid, b12, ethanol,...)
-smiles = get_smiles("benzene")
+molecule_name = input("Enter the name of your desired molecule (in English) :")# Retrieve the molecule in english from the entry field
+smiles = get_smiles(molecule_name)
+print(smiles)
+if smiles:
+        functional_groups = find_functional_groups(smiles)
+        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)
+   
+        if functional_groups: # If some functional groups are found, they will be displayed
+            functional_groups_str = ''
+            for name, data in functional_groups.items():
+                count = len(data["positions"])
+                if name in ['ketone', 'phenol']:
+                    count = int(count/2)
+                positions = data['positions']
+                if count != 0:
+                    print(f"Functional group {name} found {count} times in the molecule.")
+        else :
+            print("No functional groups found in the molecule.")
 
-# Find the functional groups of a submitted molecule
-functional_groups = find_functional_groups(smiles)
-
-# Display the 2D visualisation of the molecule
-display_molecule_2d(smiles)
-
-# Give the log(P) and the recommended eluent for a chromatgraphy
-logp, solvent = calculate_logp_and_recommend_solvent(smiles)
-
-print(f"LogP: {logp}, Solvent: {solvent}")
+        print(f"Log(P): {logp}")
+        print("Recommendation:", recommendation)
+        # Display the 2D and 3D image of the molecule in the notebook
+        display_molecule_2d(smiles)
+        generate_3d_structure(smiles) #erase if it does not work on a file.py
+else:
+        print("Error", "Molecule not found. Please try another name.")
 ```
 
 ## 🛠️ Development installation
