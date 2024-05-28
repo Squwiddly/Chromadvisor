@@ -12,7 +12,9 @@ Chromadvisor
 <br>
 
 
-(Recommend the eluant for a chromatography based on the desired molecule) A CHANGER ABSOLUMENT 
+Chromadvisor is a program that will change your life at the lab. After showing you what your 3D molecule looks like, Chromadvisor finds its functional groups and uses RDkit extensions to advise you on the best eluent for your chromatography.
+ChromAdvisor: The Smart Way to Perfect Your Chromatography
+
 
 ## 👩‍💻 Installation
 
