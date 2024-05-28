@@ -13,7 +13,8 @@ Chromadvisor
 
 <p align="center"><strong><em>ChromAdvisor: The Smart Way to Perfect Your Chromatography</em></strong></p>
 
-Chromadvisor is a program that will change your life at the lab. After showing you what your 3D molecule looks like, Chromadvisor finds its functional groups and uses RDkit extensions to advise you on the best eluent for your chromatography.
+<p align="center">Chromadvisor is a program that will change your life at the lab. After showing you what your 3D molecule looks like, Chromadvisor finds its functional groups and uses RDkit extensions to advise you on the best eluent for your chromatography.</p>
+
 
 
 ## 👩‍💻 Installation
