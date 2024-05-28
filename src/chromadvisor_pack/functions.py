@@ -348,7 +348,7 @@ def generate_3d_structure(smiles):
 
 
 # Callback function for the submit button
-def on_submit(entry, root, event=None):
+def on_submit(entry, root, event=None): # pragma: no cover
     """
     Callback function for the submit button.
 
