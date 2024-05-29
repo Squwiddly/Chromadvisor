@@ -16,31 +16,44 @@ Chromadvisor
 <p align="center">Chromadvisor is a program that will change your life at the lab. After showing you what your 3D molecule looks like, Chromadvisor finds its functional groups and uses RDkit extensions to advise you on the best eluent for your chromatography.</p>
 
 
-
-## 👩‍💻 Installation
-
-Create a new environment, you may also give the environment a different name.
 ```
 git clone https://github.com/Squwiddly/Chromadvisor.git
 cd Chromadvisor
 ```
 
+## 👩‍💻 Installation
+1. Verify that you have conda installed:
+
+```
+conda --version
+```
+
+2. Create a new environment:
+
 ```
 conda create -n chromadvisor_pack python=3.10 
 ```
+
+3. Verify that you have pip installed:
+
+```
+pip --version
+```
+
+4. Install the package:
 
 ```
 conda activate chromadvisor_pack
 (chromadvisor_pack) $ pip install .
 ```
 
-You will also need to install tkinter, which is the module for the interface :
+5. Install tkinter, which is the module for the interface:
 
 ```
 (chromadvisor_pack) $ conda install -c anaconda tk
 ```
 
-If you need jupyter lab, install it 
+6. If you need jupyter lab, install it:
 
 ```
 (chromadvisor_pack) $ pip install jupyterlab
@@ -48,6 +61,8 @@ If you need jupyter lab, install it
 
 
 ## 🔥 Usage
+
+
 
 ```python
 import tkinter as tk
