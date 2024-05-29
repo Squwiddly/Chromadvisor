@@ -156,12 +156,12 @@ To install the package, run
 
 ### Run tests and coverage
 
-![Coverage Status](assets/coverage-badge.svg)
-
 ```
 (chromadvisor_pack) $ pip install tox
 (chromadvisor_pack) $ tox
 (chromadvisor_pack) $ coverage html
 ```
 
+Our tests achieved a coverage of:
+![Coverage Status](assets/coverage-badge.svg)
 
