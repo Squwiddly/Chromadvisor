@@ -2,9 +2,6 @@
   <img src="assets/Chromadvisor_logo.png" alt="Project Logo">
 </div>
 
-
-![Coverage Status](assets/coverage-badge.svg)
-
 <h1 align="center">
 Chromadvisor
 </h1>
@@ -62,7 +59,7 @@ conda activate chromadvisor_pack
 
 ## 🔥 Usage
 
-
+To use this project, copy and paste the following code, which imports the main application function and creates an interface that calls the main application function:
 
 ```python
 import tkinter as tk
@@ -100,7 +97,7 @@ root.bind("<Return>", on_submit_wrapper)
 # Starting the main event loop for the GUI
 root.mainloop()
 ```
-OR, if you don't want the interface :
+OR, if you do not want the interface:
 
 ```python
 from src.chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d, generate_3d_structure
@@ -158,6 +155,8 @@ To install the package, run
 ```
 
 ### Run tests and coverage
+
+![Coverage Status](assets/coverage-badge.svg)
 
 ```
 (chromadvisor_pack) $ pip install tox
