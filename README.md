@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="assets/banner.png" alt="Project Logo">
+  <img src="assets/Chromadvisor_logo.png" alt="Project Logo">
 </div>
 
 
@@ -11,8 +11,11 @@ Chromadvisor
 
 <br>
 
+<p align="center"><strong><em>ChromAdvisor: The Smart Way to Perfect Your Chromatography</em></strong></p>
 
-(Recommend the eluant for a chromatography based on the desired molecule) A CHANGER ABSOLUMENT 
+<p align="center">Chromadvisor is a program that will change your life at the lab. After showing you what your 3D molecule looks like, Chromadvisor finds its functional groups and uses RDkit extensions to advise you on the best eluent for your chromatography.</p>
+
+
 
 ## 👩‍💻 Installation
 
@@ -47,7 +50,13 @@ If you need jupyter lab, install it
 ## 🔥 Usage
 
 ```python
-from chromadvisor.functions import on_submit
+import tkinter as tk
+from tkinter import ttk
+from src.chromadvisor_pack.functions import on_submit
+
+# Wrapper function to pass entry and root to on_submit
+def on_submit_wrapper(event=None):
+    on_submit(entry, root)
 
 #Below is the code to create and apply the interface to all the functions
 # Crate a GUI window
@@ -67,11 +76,11 @@ entry = ttk.Entry(root, width=50)
 entry.grid(row=0, column=1, padx=10, pady=5)
 
 # Creating a submit button to trigger the analysis
-submit_button = ttk.Button(root, text="Submit", command=on_submit)
+submit_button = ttk.Button(root, text="Submit", command=on_submit_wrapper)
 submit_button.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
 
 # Binding the "Enter" key to the submit function
-root.bind("<Return>", on_submit)
+root.bind("<Return>", on_submit_wrapper)
 
 # Starting the main event loop for the GUI
 root.mainloop()
@@ -79,21 +88,34 @@ root.mainloop()
 OR, if you don't want the interface :
 
 ```python
-from chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d
+from src.chromadvisor_pack.functions_without_interface import get_smiles, find_functional_groups, calculate_logp_and_recommend_solvent, display_molecule_2d, generate_3d_structure
 
-# Obtain the SMILES of a molecule from its english name (salicylic acid, b12, ethanol,...)
-smiles = get_smiles("benzene")
+molecule_name = input("Enter the name of your desired molecule (in English) :")# Retrieve the molecule in english from the entry field
+smiles = get_smiles(molecule_name)
+print(smiles)
+if smiles:
+        functional_groups = find_functional_groups(smiles)
+        logp, recommendation = calculate_logp_and_recommend_solvent(smiles)
+   
+        if functional_groups: # If some functional groups are found, they will be displayed
+            functional_groups_str = ''
+            for name, data in functional_groups.items():
+                count = len(data["positions"])
+                if name in ['ketone', 'phenol']:
+                    count = int(count/2)
+                positions = data['positions']
+                if count != 0:
+                    print(f"Functional group {name} found {count} times in the molecule.")
+        else :
+            print("No functional groups found in the molecule.")
 
-# Find the functional groups of a submitted molecule
-functional_groups = find_functional_groups(smiles)
-
-# Display the 2D visualisation of the molecule
-display_molecule_2d(smiles)
-
-# Give the log(P) and the recommended eluent for a chromatgraphy
-logp, solvent = calculate_logp_and_recommend_solvent(smiles)
-
-print(f"LogP: {logp}, Solvent: {solvent}")
+        print(f"Log(P): {logp}")
+        print("Recommendation:", recommendation)
+        # Display the 2D and 3D image of the molecule in the notebook
+        display_molecule_2d(smiles)
+        generate_3d_structure(smiles) #erase if it does not work on a file.py
+else:
+        print("Error", "Molecule not found. Please try another name.")
 ```
 
 ## 🛠️ Development installation

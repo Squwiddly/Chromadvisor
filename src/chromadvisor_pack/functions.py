@@ -348,7 +348,7 @@ def generate_3d_structure(smiles):
 
 
 # Callback function for the submit button
-def on_submit(event=None):
+def on_submit(entry, root, event=None): # pragma: no cover
     """
     Callback function for the submit button.
 
@@ -385,59 +385,59 @@ def on_submit(event=None):
                     functional_groups_str = '\n'.join([functional_groups_str, functional_groups_str2])
                     # Delete the lines at the beggining and at the enf of the chain
                     functional_groups_str = functional_groups_str.strip()
-
-            # Create a new window to display the informations and the image in 2D of the molecule
-            result_window = tk.Toplevel(root)
-            result_window.title("Molecule Analysis Result")
-            result_window.geometry("900x400")
-
-            # Organise the elements in the window
-            # Frame creation for the informations
-            info_frame = ttk.Frame(result_window)
-            info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-
-            # Left : informations on the functional groups, the logP and the recommendations
-            num_lines = len(functional_groups_str.split('\n')) #Make the text window as large as the number of functional groups found in the mol
-            functional_groups_label = ttk.Label(info_frame, text="Functional groups:")
-            functional_groups_label.configure(font=("Helvetica", 14))
-            functional_groups_label.pack()
-            functional_groups_text = tk.Text(info_frame, height=num_lines, width=50)
-            functional_groups_text.insert(tk.END, functional_groups_str)
-            functional_groups_text.config(state=tk.DISABLED)
-            functional_groups_text.configure(font=("Helvetica", 12))
-            functional_groups_text.pack()
-            # Afficher la polarité en log(P)
-            formatted_logp = "{:.2f}".format(logp) # Format the logP value with two decimal places
-            logp_label = ttk.Label(info_frame, text="Log(P):")
-            logp_label.configure(font=("Helvetica", 14))
-            logp_label.pack()
-            logp_text = tk.Text(info_frame, height=1, width=50)
-            logp_text.insert(tk.END, formatted_logp)
-            logp_text.config(state=tk.DISABLED)
-            logp_text.configure(font=("Helvetica", 12))
-            logp_text.pack()
-
-            # Show eluent recommendation
-            recommendation_label = ttk.Label(info_frame, text="Recommendation :")
-            recommendation_label.configure(font=("Helvetica", 14))
-            recommendation_label.pack()
-            recommendation_text = tk.Text(info_frame, height=1, width=50)
-            recommendation_text.insert(tk.END, recommendation)
-            recommendation_text.config(state=tk.DISABLED)
-            recommendation_text.configure(font=("Helvetica", 12))
-            recommendation_text.pack()
-
-            # Right: image in 2D of the molecule
-            # Add a “Molecule Display” title above the 2D image
-            molecule_display_label = ttk.Label(result_window, text="Molecule Display:")
-            molecule_display_label.configure(font=("Helvetica", 14))
-            molecule_display_label.pack(side=tk.TOP, anchor="w", padx=110, pady=(20, 0))
+        else :
+            functional_groups_str = 'No functional groups found in the molecule.'
             
-            # Display the 2D image of the molecule in the interface and 3D in the notebook
-            display_molecule_2d(smiles, result_window)
-            generate_3d_structure(smiles)
-        else:
-            messagebox.showinfo("No functional groups found in the molecule.")
+        # Create a new window to display the informations and the image in 2D of the molecule
+        result_window = tk.Toplevel(root)
+        result_window.title("Molecule Analysis Result")
+        result_window.geometry("900x400")
+
+        # Organise the elements in the window
+        # Frame creation for the informations
+        info_frame = ttk.Frame(result_window)
+        info_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+
+        # Left : informations on the functional groups, the logP and the recommendations
+        num_lines = len(functional_groups_str.split('\n')) #Make the text window as large as the number of functional groups found in the mol
+        functional_groups_label = ttk.Label(info_frame, text="Functional groups:")
+        functional_groups_label.configure(font=("Helvetica", 14))
+        functional_groups_label.pack()
+        functional_groups_text = tk.Text(info_frame, height=num_lines, width=50)
+        functional_groups_text.insert(tk.END, functional_groups_str)
+        functional_groups_text.config(state=tk.DISABLED)
+        functional_groups_text.configure(font=("Helvetica", 12))
+        functional_groups_text.pack()
+        # Afficher la polarité en log(P)
+        formatted_logp = "{:.2f}".format(logp) # Format the logP value with two decimal places
+        logp_label = ttk.Label(info_frame, text="Log(P):")
+        logp_label.configure(font=("Helvetica", 14))
+        logp_label.pack()
+        logp_text = tk.Text(info_frame, height=1, width=50)
+        logp_text.insert(tk.END, formatted_logp)
+        logp_text.config(state=tk.DISABLED)
+        logp_text.configure(font=("Helvetica", 12))
+        logp_text.pack()
+
+        # Show eluent recommendation
+        recommendation_label = ttk.Label(info_frame, text="Recommendation :")
+        recommendation_label.configure(font=("Helvetica", 14))
+        recommendation_label.pack()
+        recommendation_text = tk.Text(info_frame, height=1, width=50)
+        recommendation_text.insert(tk.END, recommendation)
+        recommendation_text.config(state=tk.DISABLED)
+        recommendation_text.configure(font=("Helvetica", 12))
+        recommendation_text.pack()
+
+        # Right: image in 2D of the molecule
+        # Add a “Molecule Display” title above the 2D image
+        molecule_display_label = ttk.Label(result_window, text="Molecule Display:")
+        molecule_display_label.configure(font=("Helvetica", 14))
+        molecule_display_label.pack(side=tk.TOP, anchor="w", padx=110, pady=(20, 0))
+            
+        # Display the 2D image of the molecule in the interface and 3D in the notebook
+        display_molecule_2d(smiles, result_window)
+        generate_3d_structure(smiles)
     else:
         messagebox.showerror("Error", "Molecule not found. Please try another name.")
 
@@ -460,11 +460,11 @@ entry = ttk.Entry(root, width=50)
 entry.grid(row=0, column=1, padx=10, pady=5)
 
 # Creating a submit button to trigger the analysis
-submit_button = ttk.Button(root, text="Submit", command=on_submit)
+submit_button = ttk.Button(root, text="Submit", command=lambda: on_submit(entry, root))
 submit_button.grid(row=1, column=0, columnspan=2, padx=10, pady=5)
 
 # Binding the "Enter" key to the submit function
-root.bind("<Return>", on_submit)
+root.bind("<Return>", lambda event: on_submit(entry, root, event))
 
 # Starting the main event loop for the GUI
 root.mainloop()
